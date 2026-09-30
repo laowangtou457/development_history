@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户操作手册：AI-NovelFlow 影视智能创作平台（三工作流）v2.0</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f4f3ee; color: #1a1b1c; line-height: 1.6; }
+  .header { background: linear-gradient(135deg, #1d4ed8,#7c3aed); color: #fff; padding: 28px 32px; }
+  .header h1 { margin: 0 0 6px; font-size: 22px; }
+  .header p { margin: 0; opacity: .85; font-size: 13px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+  .card { background: #fff; border: 1px solid #e4e3dd; border-radius: 14px; padding: 18px 20px; margin: 18px 0; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .card-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #155e75; }
+  .mermaid { display: flex; justify-content: center; }
+  .note { font-size: 12px; color: #6b7280; margin-top: 16px; text-align: center; }
+  h2 { font-size: 20px; margin: 34px 0 12px; padding-left: 12px; border-left: 5px solid #2563eb; color: #1e3a8a; }
+  h3 { font-size: 16px; margin: 18px 0 8px; color: #1e3a8a; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; background: #fff; }
+  th, td { border: 1px solid #e4e3dd; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f1f5f9; font-weight: 600; }
+  tr:nth-child(even) td { background: #fafafa; }
+  code { font-family: Consolas, 'Courier New', monospace; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1px 6px; font-size: 12.5px; }
+  .cmds { background: #0f172a; color: #e2e8f0; border-radius: 10px; padding: 14px 16px; font-size: 12.5px; overflow-x: auto; margin: 8px 0; }
+  .cmds code { background: transparent; border: none; color: #a5f3fc; padding: 0; }
+  .note-line { background: #eef2ff; border-left: 4px solid #6366f1; border-radius: 8px; padding: 10px 12px; margin: 10px 0; font-size: 13px; color: #3730a3; }
+  .li { margin: 6px 0; }
+  p { margin: 10px 0; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <div class="header">
+    <h1>用户操作手册：AI-NovelFlow 影视智能创作平台（三工作流）v2.0</h1>
+    <p>小说生成视频 / AI 武术指导 / 视频资源替换 ｜ 来源：docs/04_用户操作手册.md ｜ 2026-09-30</p>
+  </div>
+  <div class="container">
+    <div class="note-line">版本：v2.0 ｜ 更新日期：2026-09-30</div>
+    <div class="note-line">适用项目：`F:\Develop\NewAIProductionWorkflow\AI-NovelFlow`</div>
+    <div class="note-line">面向对象：小说创作者 / 视频制作人 / 素材运营（无需编程知识）</div>
+    <h2>目录</h2>
+    <div class="li">• [这是什么](#一这是什么)</div>
+    <div class="li">• [开始之前（5 分钟准备）](#二开始之前5-分钟准备)</div>
+    <div class="li">• [工作流①：小说生成视频](#三工作流小说生成视频)</div>
+    <div class="li">• [工作流②：AI 武术指导并生成视频](#四工作流ai-武术指导并生成视频)</div>
+    <div class="li">• [工作流③：视频导入解析替换资产并生成视频](#五工作流视频导入解析替换资产并生成视频)</div>
+    <div class="li">• [任务进程监控](#六任务进程监控)</div>
+    <div class="li">• [常见问题 FAQ](#七常见问题-faq)</div>
+    <h2>一、这是什么</h2>
+    <p>本系统把&quot;小说 / 一句话需求 / 参考成片&quot;三类输入，自动变成&quot;分镜 + 提示词 + 图像 + 视频&quot;的完整生产线，共三条工作流：</p>
+    <table>
+    <tr><th>工作流</th><th>输入</th><th>输出</th></tr>
+    <tr><td>① 小说生成视频</td><td>小说文本</td><td>分镜脚本、H3 提示词、关键帧、配音、成片</td></tr>
+    <tr><td>② AI 武术指导</td><td>一句话需求（+参考图）</td><td>16 宫格分镜、角色形象图、武打视频</td></tr>
+    <tr><td>③ 视频资源替换</td><td>参考成片</td><td>切镜/台词/资产、多平台提示词、替换后成片</td></tr>
+    </table>
+    <p><strong>核心特色</strong>：</p>
+    <div class="li">• 分镜与提示词由 **H3 漫剧引擎** 生成（专业漫剧导演规则），输出兼容 Seedance / Kling / Veo / 即梦 / 海螺的提示词</div>
+    <div class="li">• 全部能力本地运行（Ollama + ComfyUI），数据不出本机</div>
+    <h2>二、开始之前（5 分钟准备）</h2>
+    <h3>1. 一键启动（推荐）</h3>
+    <p>双击工程根目录 <code>一键启动全家桶.bat</code>，自动拉起 4 个服务并健康检查：</p>
+    <table>
+    <tr><th>服务</th><th>端口</th><th>用途</th></tr>
+    <tr><td>Ollama</td><td>11434</td><td>本地 LLM / VLM</td></tr>
+    <tr><td>ComfyUI</td><td>8188</td><td>生图 / 生视频</td></tr>
+    <tr><td>后端</td><td>8000</td><td>平台 API</td></tr>
+    <tr><td>前端</td><td>5173</td><td>浏览器访问 http://localhost:5173</td></tr>
+    </table>
+    <h3>2. 手动启动（调试用）</h3>
+    <div class="cmds">:: 后端
+cd /d F:\Develop\NewAIProductionWorkflow\AI-NovelFlow\backend
+venv\Scripts\python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+:: 前端
+cd /d F:\Develop\NewAIProductionWorkflow\AI-NovelFlow\frontend\my-app
+npm run dev</div>
+    <h3>3. 系统设置（首次必配）</h3>
+    <div class="li">• 进入首页 → 右上角「系统设置」</div>
+    <div class="li">• **LLM 供应商**：选 `Ollama`；**API URL**：`http://127.0.0.1:11434/v1`</div>
+    <div class="li">• 保存后回到首页，确认 Ollama 连接正常</div>
+    <div class="li">• 生图/生视频由 ComfyUI 执行，保持 :8188 运行即可</div>
+    <h2>三、工作流①：小说生成视频</h2>
+    <h3>完整流程</h3>
+    <div class="cmds">导入小说 → AI解析角色/场景/道具 → 编辑章节 → H3生成文字分镜 → 生成分镜提示词(H3)
+                                              │
+            并行：AI解析角色/场景/道具 → 生成对应图（素材注入）
+                                              │
+                  生成主分镜图/关键帧 → 音频/台词合成 → 视频生成 → Shot合并 → 章节成片</div>
+    <h3>分步操作</h3>
+    <table>
+    <tr><th>步骤</th><th>操作</th><th>说明</th></tr>
+    <tr><td>1 导入小说</td><td>首页「导入小说」或「小说管理」</td><td>填标题/作者/简介；也可批量导入整本 TXT</td></tr>
+    <tr><td>2 解析资产</td><td>章节管理 → 解析角色/场景/道具</td><td>自动提取并生成对应图片；角色自动去重（同人同年龄段唯一）</td></tr>
+    <tr><td>3 编辑章节</td><td>章节详情 → 粘贴正文/剧本</td><td>内容越完整（对白/动作/场景）分镜质量越高</td></tr>
+    <tr><td>4 H3 文字分镜</td><td>分镜拆分 →「H3 生成文字分镜」</td><td>按导演规则拆镜头（30b 模型，约 30-90 秒）</td></tr>
+    <tr><td>5 分镜提示词</td><td>分镜拆分 →「生成分镜提示词（H3）」</td><td>逐镜生成六段式提示词，写入「视频描述」</td></tr>
+    <tr><td>6 分镜图/关键帧</td><td>分镜图生成 Tab</td><td>生成主分镜图；超长镜头自动规划多关键帧</td></tr>
+    <tr><td>7 音频</td><td>音频生成 Tab</td><td>按台词生成角色配音/旁白</td></tr>
+    <tr><td>8 视频</td><td>视频生成 Tab →「生成」</td><td>首尾帧/多关键帧模式；单段 ≤15s，超长自动补帧</td></tr>
+    <tr><td>9 合片</td><td>「合并视频」/ 最终视频页</td><td>多镜拼接成章节成片</td></tr>
+    </table>
+    <h3>提示</h3>
+    <div class="li">• 每个角色/场景/道具都有「AI 重新生成提示词」按钮；外观描述保存后自动转英文</div>
+    <div class="li">• ⚠️ 重新生成分镜会清空已生成的分镜图/视频，重要成果先导出</div>
+    <h2>四、工作流②：AI 武术指导并生成视频</h2>
+    <p>入口：侧边栏「武术指导」（/martial-arts）</p>
+    <h3>流程</h3>
+    <div class="cmds">一句话需求（+参考图） → 需求解析 → 人物锚定卡 → 16宫格分镜提示词
+  → ① 角色形象图 → ② 分镜图 → ③ 武打视频</div>
+    <h3>分步操作</h3>
+    <table>
+    <tr><th>步骤</th><th>操作</th><th>说明</th></tr>
+    <tr><td>1 输入需求</td><td>一句话描述（如&quot;太极宗师对外家拳师，晨曦庭院，要有太极哲学&quot;）</td><td>可上传参考图，由视觉模型解析生成资产</td></tr>
+    <tr><td>2 生成锚定卡</td><td>点击生成</td><td>多角色定义（性别/年龄/服装/武器/形象细节，英文）</td></tr>
+    <tr><td>3 16 宫格分镜</td><td>生成武打分镜提示词</td><td>16 个独立镜头块，递增时间戳、动作不重复、机位逐镜变化</td></tr>
+    <tr><td>4 角色形象图</td><td>「生成角色形象图」</td><td>文生图（Flux2-4B），锁定人物形象</td></tr>
+    <tr><td>5 分镜图</td><td>「生成分镜图」</td><td>图生图（以形象图为参考），16 宫格海报</td></tr>
+    <tr><td>6 武打视频</td><td>「生成武打视频」</td><td>单段 15s，自动分段拼接 30/45/60s 成片</td></tr>
+    </table>
+    <h3>提示</h3>
+    <div class="li">• 历史任务自动保存（角色/分镜图/视频/时间），刷新不丢，可随时回看</div>
+    <div class="li">• 需求里**人物数量**写清楚（&quot;两人对打&quot;等），提示词会约束画面人物一致</div>
+    <h2>五、工作流③：视频导入解析替换资产并生成视频</h2>
+    <p>入口：侧边栏「视频资源替换」（/video-asset-swap）</p>
+    <h3>流程</h3>
+    <div class="cmds">上传参考成片 → 自动分析（数分钟） → 浏览分镜/关键帧/台词/资产
+  → 替换角色/场景资产（原创形象） → 重新导出提示词 → 下载提示词包</div>
+    <h3>分步操作</h3>
+    <table>
+    <tr><th>步骤</th><th>操作</th><th>说明</th></tr>
+    <tr><td>1 上传</td><td>点击上传（mp4/mov/mkv 等）</td><td>后台自动跑管线：切镜+ASR+VLM+资产抽取</td></tr>
+    <tr><td>2 浏览</td><td>任务列表 → 详情</td><td>分镜时间线+关键帧网格 / 分镜表 / 资产卡片 / H3 提示词</td></tr>
+    <tr><td>3 替换资产</td><td>资产卡片 →「替换资产」</td><td>上传无版权原创形象图，原图自动备份，重跑导出</td></tr>
+    <tr><td>4 下载</td><td>「下载 ZIP」</td><td>提示词包含逐镜提示词 + payload（可直接粘贴 Seedance/Kling/Veo/即梦/海螺）</td></tr>
+    <tr><td>5 提交生成</td><td>海螺/API 提交</td><td>得到&quot;剧情/台词/音乐与原片接近，人物/场景/服装已替换&quot;的成片</td></tr>
+    </table>
+    <h3>合规自检（每次发布前）</h3>
+    <div class="li">• 输入视频为自有 / 已授权 / 公有领域内容</div>
+    <div class="li">• 剧情、台词、音乐已实质性改写</div>
+    <div class="li">• 人物形象已替换为无版权问题形象（原创/授权/自扫描）</div>
+    <div class="li">• 生成结果仅用于个人学习或非盈利展示</div>
+    <h2>六、任务进程监控</h2>
+    <p>入口：侧边栏「任务进程监控」（/monitor）</p>
+    <div class="li">• 查看全部任务状态（生成中/排队/失败）、显存占用、LLM pending 时长</div>
+    <div class="li">• 显存接近满载时提前干预，避免 OOM 死锁</div>
+    <div class="li">• 支持停止卡死的任务</div>
+    <h2>七、常见问题 FAQ</h2>
+    <h3>Q1：提示「ComfyUI 连接失败」/ 生图不动</h3>
+    <div class="li">• 确认一键启动已拉起 ComfyUI（:8188）；页面「系统配置-ComfyUI 工作流」映射完整</div>
+    <div class="li">• 显存占满时任务会排队（GPU 串行调度），属正常现象，等队列消化</div>
+    <h3>Q2：H3 生成文字分镜报「拆分失败，请检查网络连接」</h3>
+    <div class="li">• 确认 Ollama 运行（`ollama list`）；系统设置 LLM 选 Ollama 且 URL 正确</div>
+    <div class="li">• 分镜用 30b 模型，若显存紧张会排队，耐心等待</div>
+    <h3>Q3：分镜提示词是空的 / 只有文字没有参考图标签</h3>
+    <div class="li">• 先生成文字分镜，再生成提示词（有依赖顺序）</div>
+    <div class="li">• 未提供资源映射时提示词无 `&lt;Picture&gt;` 标签，视频按文字描述生成</div>
+    <h3>Q4：视频生成失败 / 15 秒超限</h3>
+    <div class="li">• 单段 15s 是模型上限；超长镜头请用多关键帧模式或分段拼接</div>
+    <div class="li">• 失败后按提示&quot;重新生成缺失 Clip 或重新生成当前 Shot 视频&quot;</div>
+    <h3>Q5：生成的角色不像 / 动作崩坏</h3>
+    <div class="li">• 角色：编辑外观描述 → 点「AI 重新生成提示词」（英文）→ 重新生成图</div>
+    <div class="li">• 动作：细化视频提示词（写清每个分镜动作、机位）；或换 45/60s 分段拼接</div>
+    <h3>Q6：视频资源替换的分析结果没有画面描述</h3>
+    <div class="li">• 画面描述依赖 VLM（qwen2.5vl）；Ollama 未启动时降级为&quot;待补充&quot;，不阻断其他步骤</div>
+    <p><em>手册完。遇到问题请提供：操作步骤 + 页面提示文字 + 后端终端日志。</em></p>
+    <div class="note">— 由 docs/ 文档生成 ｜ 小说生成视频 / AI 武术指导 / 视频资源替换 ｜ 来源：docs/04_用户操作手册.md ｜ 2026-09-30 —</div>
+  </div>
+</body>
+</html>
